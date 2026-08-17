@@ -10,7 +10,6 @@ namespace Tan_OOPLab3.Models
     {
         private double width {get; set;}
         private double length {get; set;}
-
         private double perimeter {get; set;}
 
         public double Width
