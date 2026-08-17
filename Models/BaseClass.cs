@@ -6,20 +6,41 @@ using System.Threading.Tasks;
 
 namespace Tan_OOPLab3.Models
 {
-    public class BaseClass
+    internal class BaseClass
     {
-        // mga class
-        public class Dog 
+        private double width {get; set;}
+        private double length {get; set;}
+
+        private double perimeter {get; set;}
+
+        public double Width
         {
-            public string Name;
-            public string Breed;
-            public string Sex;
+            get { return width; }
+            set { if(value > 0)
+                width = value;
+                else
+                    Console.WriteLine("Invalid");
+            }
         }
-        public class Cat
+        public double Length
         {
-            public string Name;
-            public string Breed;
-            public string Sex;
+            get { return length; }
+            set {
+                if (value > 0) length = value;
+                else
+                    Console.WriteLine("Invalid");
+                    }
         }
+        public double Perimeter
+        {
+            get {
+                return perimeter = (2 * length) + (2 * width); }
+            set { perimeter = value; }
+        }
+
+       
+
+        
+
     }
 }
