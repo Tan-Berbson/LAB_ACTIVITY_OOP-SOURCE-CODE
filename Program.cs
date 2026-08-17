@@ -15,7 +15,6 @@ namespace Tan_OOPLab3
             // ang purpose nganong wala nako gi code deri sa program.cs  ang mga logic sa app gusto nako organize ug maintainable  akong code para dali ra matrace kung asa dapit ang error ug ma fix dayun
             MainMenu Menumethods = new MainMenu();
             Menumethods.Menu();
-
             //Methods Folder
             // Mainmenu mao na ang dashboard 
             // MenuCreateDisplayAction Mao na nga method gamiton para mag create ug data
