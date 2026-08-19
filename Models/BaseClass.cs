@@ -8,10 +8,12 @@ namespace Tan_OOPLab3.Models
 {
     internal class BaseClass
     {
+        // class
         private double width {get; set;}
         private double length {get; set;}
         private double perimeter {get; set;}
 
+        //settters
         public double Width
         {
             get { return width; }
@@ -21,6 +23,7 @@ namespace Tan_OOPLab3.Models
                     Console.WriteLine("Invalid");
             }
         }
+        //settters
         public double Length
         {
             get { return length; }
@@ -30,13 +33,15 @@ namespace Tan_OOPLab3.Models
                     Console.WriteLine("Invalid");
                     }
         }
+        //settters
         public double Perimeter
         {
             get {
                 return perimeter = (2 * length) + (2 * width); }
             set { perimeter = value; }
         }
-
+        // get means get the data
+        // setter means set the data
        
 
         
