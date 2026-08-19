@@ -20,6 +20,7 @@ namespace Tan_OOPLab3.Models
             public string Name;
             public string Breed;
             public string Sex;
+
         }
     }
 }
