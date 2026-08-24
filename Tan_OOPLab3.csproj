@@ -43,11 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Methods\MainMenu.cs" />
-    <Compile Include="Methods\MenuCreateAction.cs" />
-    <Compile Include="Methods\MenuDisplayAction.cs" />
-    <Compile Include="Methods\SelectDisplay.cs" />
-    <Compile Include="Models\BaseClass.cs" />
+    <Compile Include="Models\Operations.cs" />
+    <Compile Include="Models\Pos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
