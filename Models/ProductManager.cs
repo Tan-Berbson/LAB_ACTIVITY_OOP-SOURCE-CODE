@@ -16,6 +16,7 @@ namespace Tan_OOPLab3.Models
         private int soldQuantity;
         private int total;
 
+         // Constructor to initialize products from ProductInfo class
         public ProductManager()
         {
             product1 = new ProductInfo("Hamburger", 100);
@@ -25,7 +26,7 @@ namespace Tan_OOPLab3.Models
             product5 = new ProductInfo("Ice Cream", 40);
         }
 
-        public void View()
+        public void ViewAllProduct()
         {
             Console.WriteLine("=== PRODUCTS ===");
 
@@ -53,7 +54,7 @@ namespace Tan_OOPLab3.Models
 
                 Console.Write("Select: ");
 
-                // Added TryParse for Dashboard selection
+                // Try parse to validate user input for menu selection
                 int select;
                 while (!int.TryParse(Console.ReadLine(), out select))
                 {
@@ -94,7 +95,7 @@ namespace Tan_OOPLab3.Models
 
         public void ManageProduct()
         {
-            View();
+            ViewAllProduct();
 
             Console.WriteLine();
             Console.Write("Select which to edit: ");
@@ -134,7 +135,7 @@ namespace Tan_OOPLab3.Models
             Console.Write("New Product Name: ");
             string newName = Console.ReadLine();
 
-            // Validate the string input
+            // Try parse to validate user input for product name
             while (string.IsNullOrWhiteSpace(newName))
             {
                 Console.WriteLine("Product name cannot be empty. Please enter a valid name.");
@@ -148,7 +149,7 @@ namespace Tan_OOPLab3.Models
             // Prompt for the price BEFORE the validation loop starts
             Console.Write("New Product Price: ");
 
-            // Validate the integer input
+            // Try parse to validate user input for price
             int newPrice;
             while (!int.TryParse(Console.ReadLine(), out newPrice))
             {
@@ -163,12 +164,12 @@ namespace Tan_OOPLab3.Models
         }
         public void StartSell()
         {
-            View();
+            ViewAllProduct();
 
             Console.WriteLine();
             Console.Write("Which product to sell: ");
 
-            // Added TryParse for Product Selection
+            // Try parse to validate user input for product selection
             int select;
             while (!int.TryParse(Console.ReadLine(), out select))
             {
@@ -200,7 +201,7 @@ namespace Tan_OOPLab3.Models
 
             Console.Write("Quantity: ");
 
-            // Added TryParse for Quantity
+            // Try parse to validate user input for quantity
             while (!int.TryParse(Console.ReadLine(), out soldQuantity))
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
