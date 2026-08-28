@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Tan_OOPLab3.Models
 {
     internal class ProductManager
     {
-        // Products
+        // Products from product info class
         private ProductInfo product1;
         private ProductInfo product2;
         private ProductInfo product3;
@@ -12,6 +16,7 @@ namespace Tan_OOPLab3.Models
         private ProductInfo product5;
 
         // Sale information
+        // variable rana ang soldproduct
         private ProductInfo soldProduct;
         private int soldQuantity;
         private int total;
@@ -30,11 +35,11 @@ namespace Tan_OOPLab3.Models
         {
             Console.WriteLine("=== PRODUCTS ===");
 
-            Console.WriteLine("1. " + product1.Name + " - ₱" + product1.Price);
-            Console.WriteLine("2. " + product2.Name + " - ₱" + product2.Price);
-            Console.WriteLine("3. " + product3.Name + " - ₱" + product3.Price);
-            Console.WriteLine("4. " + product4.Name + " - ₱" + product4.Price);
-            Console.WriteLine("5. " + product5.Name + " - ₱" + product5.Price);
+            Console.WriteLine("1. " + product1.Name + " - " + product1.Price);
+            Console.WriteLine("2. " + product2.Name + " - " + product2.Price);
+            Console.WriteLine("3. " + product3.Name + " - " + product3.Price);
+            Console.WriteLine("4. " + product4.Name + " - " + product4.Price);
+            Console.WriteLine("5. " + product5.Name + " - " + product5.Price);
         }
 
         public void Dashboard()
@@ -67,7 +72,7 @@ namespace Tan_OOPLab3.Models
                 switch (select)
                 {
                     case 1:
-                        View();
+                        ViewAllProduct();
                         break;
                     case 2:
                         ManageProduct();
@@ -101,6 +106,7 @@ namespace Tan_OOPLab3.Models
             Console.Write("Select which to edit: ");
 
             int select;
+            // Validate user selection
             while (!int.TryParse(Console.ReadLine(), out select))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
@@ -157,7 +163,7 @@ namespace Tan_OOPLab3.Models
                 Console.Write("New Product Price: ");
             }
 
-         
+            // Assign and Validate Product Price
             product.Price = newPrice;
 
             Console.WriteLine("Product updated successfully!");
@@ -227,10 +233,10 @@ namespace Tan_OOPLab3.Models
 
             Console.WriteLine("========== RECEIPT ==========");
             Console.WriteLine("Product: " + soldProduct.Name);
-            Console.WriteLine("Price: ₱" + soldProduct.Price);
+            Console.WriteLine("Price: " + soldProduct.Price);
             Console.WriteLine("Quantity: " + soldQuantity);
             Console.WriteLine("-----------------------------");
-            Console.WriteLine("Total: ₱" + total);
+            Console.WriteLine("Total: " + total);
             Console.WriteLine("=============================");
         }
     }
