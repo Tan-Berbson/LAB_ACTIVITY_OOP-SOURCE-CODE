@@ -1,10 +1,15 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System;
 
 namespace Tan_OOPLab3.Models
 {
     internal class ProductManager
     {
+        // Product and sales fields
         private ProductFood food1;
         private ProductFood food2;
         private ProductFood food3;
@@ -21,6 +26,7 @@ namespace Tan_OOPLab3.Models
         private int soldQuantity;
         private int total;
 
+        // Initialize product data
         public ProductManager()
         {
             food1 = new ProductFood(1, "Hamburger", 100);
@@ -36,6 +42,7 @@ namespace Tan_OOPLab3.Models
             drink5 = new ProductDrinks(10, "Coffee", 50);
         }
 
+        // Start the login process
         public void StartSystem()
         {
             Console.Clear();
@@ -75,6 +82,7 @@ namespace Tan_OOPLab3.Models
             Dashboard(role);
         }
 
+        // Display the dashboard based on the user's role
         public void Dashboard(string role)
         {
             bool running = true;
@@ -131,6 +139,7 @@ namespace Tan_OOPLab3.Models
                         case 3:
                             running = false;
                             Console.WriteLine("Logging out...");
+                            StartSystem();
                             break;
 
                         default:
@@ -163,7 +172,7 @@ namespace Tan_OOPLab3.Models
                 }
             }
         }
-
+        // Display all available products
         public void ViewAllProduct()
         {
             Console.WriteLine("================================");
@@ -191,6 +200,7 @@ namespace Tan_OOPLab3.Models
             Console.WriteLine("================================");
         }
 
+        // Allow the admin to edit a product
         public void ManageProduct()
         {
             ViewAllProduct();
@@ -254,6 +264,7 @@ namespace Tan_OOPLab3.Models
             }
         }
 
+        // Edit the selected product
         private void EditProduct(ProductInfo product)
         {
             Console.WriteLine();
@@ -287,45 +298,8 @@ namespace Tan_OOPLab3.Models
             Console.WriteLine("Product updated successfully!");
         }
 
-        private ProductInfo FindProduct(int id)
-        {
-            switch (id)
-            {
-                case 1:
-                    return food1;
 
-                case 2:
-                    return food2;
-
-                case 3:
-                    return food3;
-
-                case 4:
-                    return food4;
-
-                case 5:
-                    return food5;
-
-                case 6:
-                    return drink1;
-
-                case 7:
-                    return drink2;
-
-                case 8:
-                    return drink3;
-
-                case 9:
-                    return drink4;
-
-                case 10:
-                    return drink5;
-
-                default:
-                    return null;
-            }
-        }
-
+        // Start the product selling process
         public void StartSell()
         {
             ViewAllProduct();
@@ -390,6 +364,7 @@ namespace Tan_OOPLab3.Models
 
             Console.Write("Quantity: ");
 
+            // Validate the quantity input
             while (!int.TryParse(Console.ReadLine(), out soldQuantity) || soldQuantity <= 0)
             {
                 Console.WriteLine("Invalid quantity. Please enter a valid number.");
@@ -405,6 +380,7 @@ namespace Tan_OOPLab3.Models
             Receipt();
         }
 
+        // Display the sales receipt
         public void Receipt()
         {
             if (soldProduct == null)
@@ -429,7 +405,7 @@ namespace Tan_OOPLab3.Models
 
             Console.WriteLine("================================");
         }
-
+        // Console Readkey Method
         private void Pause()
         {
             Console.WriteLine();

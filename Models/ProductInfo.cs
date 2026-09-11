@@ -1,8 +1,13 @@
 ﻿
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System;
 
 namespace Tan_OOPLab3.Models
 {
+    // Accounts Class
     public class AuthorizeAccounts
     {
         public string AdminName = "admin";
@@ -15,18 +20,20 @@ namespace Tan_OOPLab3.Models
         {
             if (username == AdminName && password == AdminPassword)
             {
+                // Return the user's role after successful login
                 return "Admin";
             }
 
             if (username == CashierName && password == CashierPassword)
             {
+                // Return the user's role after successful login
                 return "Cashier";
             }
 
             return "Invalid";
         }
     }
-
+    // Product info class that inherits from AuthorizeAccounts
     public class ProductInfo : AuthorizeAccounts
     {
         public int Id;
@@ -34,7 +41,7 @@ namespace Tan_OOPLab3.Models
 
         protected string _Name;
         protected int _Price;
-
+        // Product name property with validation
         public string Name
         {
             get
@@ -53,7 +60,7 @@ namespace Tan_OOPLab3.Models
                 }
             }
         }
-
+        // Product price property with validation
         public int Price
         {
             get
@@ -73,6 +80,7 @@ namespace Tan_OOPLab3.Models
             }
         }
 
+        // Product Info constructor
         public ProductInfo(int id, string name, int price, string category)
         {
             Id = id;
@@ -82,6 +90,7 @@ namespace Tan_OOPLab3.Models
         }
     }
 
+    // Drink product class that inherits from ProductInfo
     public class ProductDrinks : ProductInfo
     {
         public ProductDrinks(int id, string drinkName, int drinkPrice)
@@ -89,7 +98,7 @@ namespace Tan_OOPLab3.Models
         {
         }
     }
-
+    // Food product class that inherits from ProductInfo
     public class ProductFood : ProductInfo
     {
         public ProductFood(int id, string foodName, int foodPrice)
