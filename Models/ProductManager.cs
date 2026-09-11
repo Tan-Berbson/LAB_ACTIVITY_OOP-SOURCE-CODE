@@ -1,48 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 
 namespace Tan_OOPLab3.Models
 {
     internal class ProductManager
     {
-        // Products from product info class
-        private ProductInfo product1;
-        private ProductInfo product2;
-        private ProductInfo product3;
-        private ProductInfo product4;
-        private ProductInfo product5;
+        private ProductFood food1;
+        private ProductFood food2;
+        private ProductFood food3;
+        private ProductFood food4;
+        private ProductFood food5;
 
-        // Sale information
-        // variable rana ang soldproduct
+        private ProductDrinks drink1;
+        private ProductDrinks drink2;
+        private ProductDrinks drink3;
+        private ProductDrinks drink4;
+        private ProductDrinks drink5;
+
         private ProductInfo soldProduct;
         private int soldQuantity;
         private int total;
 
-         // Constructor to initialize products from ProductInfo class
         public ProductManager()
         {
-            product1 = new ProductInfo("Hamburger", 100);
-            product2 = new ProductInfo("Fries", 50);
-            product3 = new ProductInfo("Chicken", 120);
-            product4 = new ProductInfo("Coke", 30);
-            product5 = new ProductInfo("Ice Cream", 40);
+            food1 = new ProductFood(1, "Hamburger", 100);
+            food2 = new ProductFood(2, "Fries", 50);
+            food3 = new ProductFood(3, "Chicken", 120);
+            food4 = new ProductFood(4, "Pizza", 150);
+            food5 = new ProductFood(5, "Ice Cream", 40);
+
+            drink1 = new ProductDrinks(6, "Coke", 30);
+            drink2 = new ProductDrinks(7, "Sprite", 30);
+            drink3 = new ProductDrinks(8, "Royal", 30);
+            drink4 = new ProductDrinks(9, "Iced Tea", 40);
+            drink5 = new ProductDrinks(10, "Coffee", 50);
         }
 
-        public void ViewAllProduct()
+        public void StartSystem()
         {
-            Console.WriteLine("=== PRODUCTS ===");
+            Console.Clear();
 
-            Console.WriteLine("1. " + product1.Name + " - " + product1.Price);
-            Console.WriteLine("2. " + product2.Name + " - " + product2.Price);
-            Console.WriteLine("3. " + product3.Name + " - " + product3.Price);
-            Console.WriteLine("4. " + product4.Name + " - " + product4.Price);
-            Console.WriteLine("5. " + product5.Name + " - " + product5.Price);
+            Console.WriteLine("================================");
+            Console.WriteLine("       PRODUCT SYSTEM LOGIN");
+            Console.WriteLine("================================");
+
+            Console.Write("Username: ");
+            string username = Console.ReadLine();
+
+            Console.Write("Password: ");
+            string password = Console.ReadLine();
+
+            AuthorizeAccounts account = new AuthorizeAccounts();
+
+            string role = account.Login(username, password);
+
+            if (role == "Invalid")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Invalid username or password.");
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+                Console.Clear();
+                StartSystem();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Login successful!");
+            Console.WriteLine("Account: " + role);
+
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+
+            Dashboard(role);
         }
 
-        public void Dashboard()
+        public void Dashboard(string role)
         {
             bool running = true;
 
@@ -50,52 +83,112 @@ namespace Tan_OOPLab3.Models
             {
                 Console.Clear();
 
-                Console.WriteLine("========== DASHBOARD ==========");
-                Console.WriteLine("1. View Products");
-                Console.WriteLine("2. Manage Product");
-                Console.WriteLine("3. Sell Product");
-                Console.WriteLine("4. Exit");
-                Console.WriteLine("===============================");
+                Console.WriteLine("================================");
+                Console.WriteLine("           DASHBOARD");
+                Console.WriteLine("================================");
+                Console.WriteLine("Logged in as: " + role);
+                Console.WriteLine();
 
+                if (role == "Admin")
+                {
+                    Console.WriteLine("1. View Products");
+                    Console.WriteLine("2. Manage Products");
+                    Console.WriteLine("3. Logout");
+                }
+                else if (role == "Cashier")
+                {
+                    Console.WriteLine("1. Sell Product");
+                    Console.WriteLine("2. Logout");
+                }
+
+                Console.WriteLine("================================");
                 Console.Write("Select: ");
 
-                // Try parse to validate user input for menu selection
                 int select;
+
                 while (!int.TryParse(Console.ReadLine(), out select))
                 {
                     Console.WriteLine("Invalid input. Please enter a number.");
                     Console.Write("Select: ");
                 }
 
-                Console.Clear();
-
-                switch (select)
+                if (role == "Admin")
                 {
-                    case 1:
-                        ViewAllProduct();
-                        break;
-                    case 2:
-                        ManageProduct();
-                        break;
-                    case 3:
-                        StartSell();
-                        break;
-                    case 4:
-                        running = false;
-                        Console.WriteLine("Thank you!");
-                        break;
-                    default:
-                        Console.WriteLine("Invalid selection.");
-                        break;
+                    switch (select)
+                    {
+                        case 1:
+                            Console.Clear();
+                            ViewAllProduct();
+                            Pause();
+                            break;
+
+                        case 2:
+                            Console.Clear();
+                            ManageProduct();
+                            Pause();
+                            break;
+
+                        case 3:
+                            running = false;
+                            Console.WriteLine("Logging out...");
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid selection.");
+                            Pause();
+                            break;
+                    }
                 }
-
-                if (running)
+                else if (role == "Cashier")
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
+                    switch (select)
+                    {
+                        case 1:
+                            Console.Clear();
+                            StartSell();
+                            Pause();
+                            break;
+
+                        case 2:
+                            running = false;
+                            Console.WriteLine("Logging out...");
+                            StartSystem();
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid selection.");
+                            Pause();
+                            break;
+                    }
                 }
             }
+        }
+
+        public void ViewAllProduct()
+        {
+            Console.WriteLine("================================");
+            Console.WriteLine("             FOODS");
+            Console.WriteLine("================================");
+
+            Console.WriteLine("1. " + food1.Name + " - " + food1.Price);
+            Console.WriteLine("2. " + food2.Name + " - " + food2.Price);
+            Console.WriteLine("3. " + food3.Name + " - " + food3.Price);
+            Console.WriteLine("4. " + food4.Name + " - " + food4.Price);
+            Console.WriteLine("5. " + food5.Name + " - " + food5.Price);
+
+            Console.WriteLine();
+
+            Console.WriteLine("================================");
+            Console.WriteLine("            DRINKS");
+            Console.WriteLine("================================");
+
+            Console.WriteLine("6. " + drink1.Name + " - " + drink1.Price);
+            Console.WriteLine("7. " + drink2.Name + " - " + drink2.Price);
+            Console.WriteLine("8. " + drink3.Name + " - " + drink3.Price);
+            Console.WriteLine("9. " + drink4.Name + " - " + drink4.Price);
+            Console.WriteLine("10. " + drink5.Name + " - " + drink5.Price);
+
+            Console.WriteLine("================================");
         }
 
         public void ManageProduct()
@@ -106,7 +199,7 @@ namespace Tan_OOPLab3.Models
             Console.Write("Select which to edit: ");
 
             int select;
-            // Validate user selection
+
             while (!int.TryParse(Console.ReadLine(), out select))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
@@ -116,20 +209,45 @@ namespace Tan_OOPLab3.Models
             switch (select)
             {
                 case 1:
-                    EditProduct(product1);
+                    EditProduct(food1);
                     break;
+
                 case 2:
-                    EditProduct(product2);
+                    EditProduct(food2);
                     break;
+
                 case 3:
-                    EditProduct(product3);
+                    EditProduct(food3);
                     break;
+
                 case 4:
-                    EditProduct(product4);
+                    EditProduct(food4);
                     break;
+
                 case 5:
-                    EditProduct(product5);
+                    EditProduct(food5);
                     break;
+
+                case 6:
+                    EditProduct(drink1);
+                    break;
+
+                case 7:
+                    EditProduct(drink2);
+                    break;
+
+                case 8:
+                    EditProduct(drink3);
+                    break;
+
+                case 9:
+                    EditProduct(drink4);
+                    break;
+
+                case 10:
+                    EditProduct(drink5);
+                    break;
+
                 default:
                     Console.WriteLine("Invalid product.");
                     break;
@@ -138,36 +256,76 @@ namespace Tan_OOPLab3.Models
 
         private void EditProduct(ProductInfo product)
         {
+            Console.WriteLine();
+            Console.WriteLine("Editing: " + product.Name);
+
             Console.Write("New Product Name: ");
             string newName = Console.ReadLine();
 
-            // Try parse to validate user input for product name
             while (string.IsNullOrWhiteSpace(newName))
             {
-                Console.WriteLine("Product name cannot be empty. Please enter a valid name.");
+                Console.WriteLine("Product name cannot be empty.");
                 Console.Write("New Product Name: ");
                 newName = Console.ReadLine();
             }
 
-            // Assign the validated name
             product.Name = newName;
 
-            // Prompt for the price BEFORE the validation loop starts
             Console.Write("New Product Price: ");
 
-            // Try parse to validate user input for price
             int newPrice;
-            while (!int.TryParse(Console.ReadLine(), out newPrice))
+
+            while (!int.TryParse(Console.ReadLine(), out newPrice) || newPrice <= 0)
             {
-                Console.WriteLine("Invalid input. Please enter a valid number.");
+                Console.WriteLine("Please enter a valid price.");
                 Console.Write("New Product Price: ");
             }
 
-            // Assign and Validate Product Price
             product.Price = newPrice;
 
+            Console.WriteLine();
             Console.WriteLine("Product updated successfully!");
         }
+
+        private ProductInfo FindProduct(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return food1;
+
+                case 2:
+                    return food2;
+
+                case 3:
+                    return food3;
+
+                case 4:
+                    return food4;
+
+                case 5:
+                    return food5;
+
+                case 6:
+                    return drink1;
+
+                case 7:
+                    return drink2;
+
+                case 8:
+                    return drink3;
+
+                case 9:
+                    return drink4;
+
+                case 10:
+                    return drink5;
+
+                default:
+                    return null;
+            }
+        }
+
         public void StartSell()
         {
             ViewAllProduct();
@@ -175,8 +333,8 @@ namespace Tan_OOPLab3.Models
             Console.WriteLine();
             Console.Write("Which product to sell: ");
 
-            // Try parse to validate user input for product selection
             int select;
+
             while (!int.TryParse(Console.ReadLine(), out select))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
@@ -186,20 +344,45 @@ namespace Tan_OOPLab3.Models
             switch (select)
             {
                 case 1:
-                    soldProduct = product1;
+                    soldProduct = food1;
                     break;
+
                 case 2:
-                    soldProduct = product2;
+                    soldProduct = food2;
                     break;
+
                 case 3:
-                    soldProduct = product3;
+                    soldProduct = food3;
                     break;
+
                 case 4:
-                    soldProduct = product4;
+                    soldProduct = food4;
                     break;
+
                 case 5:
-                    soldProduct = product5;
+                    soldProduct = food5;
                     break;
+
+                case 6:
+                    soldProduct = drink1;
+                    break;
+
+                case 7:
+                    soldProduct = drink2;
+                    break;
+
+                case 8:
+                    soldProduct = drink3;
+                    break;
+
+                case 9:
+                    soldProduct = drink4;
+                    break;
+
+                case 10:
+                    soldProduct = drink5;
+                    break;
+
                 default:
                     Console.WriteLine("Invalid product.");
                     return;
@@ -207,10 +390,9 @@ namespace Tan_OOPLab3.Models
 
             Console.Write("Quantity: ");
 
-            // Try parse to validate user input for quantity
-            while (!int.TryParse(Console.ReadLine(), out soldQuantity))
+            while (!int.TryParse(Console.ReadLine(), out soldQuantity) || soldQuantity <= 0)
             {
-                Console.WriteLine("Invalid input. Please enter a valid number.");
+                Console.WriteLine("Invalid quantity. Please enter a valid number.");
                 Console.Write("Quantity: ");
             }
 
@@ -230,14 +412,30 @@ namespace Tan_OOPLab3.Models
                 Console.WriteLine("No sale available.");
                 return;
             }
+            Console.Clear();
 
-            Console.WriteLine("========== RECEIPT ==========");
-            Console.WriteLine("Product: " + soldProduct.Name);
-            Console.WriteLine("Price: " + soldProduct.Price);
+            Console.WriteLine("================================");
+            Console.WriteLine("             RECEIPT");
+            Console.WriteLine("================================");
+
+            Console.WriteLine("Product : " + soldProduct.Name);
+            Console.WriteLine("Category: " + soldProduct.Category);
+            Console.WriteLine("Price   : " + soldProduct.Price);
             Console.WriteLine("Quantity: " + soldQuantity);
-            Console.WriteLine("-----------------------------");
-            Console.WriteLine("Total: " + total);
-            Console.WriteLine("=============================");
+
+            Console.WriteLine("--------------------------------");
+
+            Console.WriteLine("TOTAL   : " + total);
+
+            Console.WriteLine("================================");
+        }
+
+        private void Pause()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
     }
 }
+

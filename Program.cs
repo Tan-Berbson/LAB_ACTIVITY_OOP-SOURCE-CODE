@@ -14,7 +14,7 @@ namespace Tan_OOPLab3
         {
             ProductManager manager = new ProductManager();
 
-            manager.Dashboard();
+            manager.StartSystem();
         }
     }
 }
