@@ -8,6 +8,7 @@ using System;
 namespace Tan_OOPLab3.Models
 {
     // Accounts Class
+    // Multilevel Inheritance
     public class AuthorizeAccounts
     {
         public string AdminName = "admin";
@@ -91,6 +92,7 @@ namespace Tan_OOPLab3.Models
     }
 
     // Drink product class that inherits from ProductInfo
+    // Hierarchical Inheritance
     public class ProductDrinks : ProductInfo
     {
         public ProductDrinks(int id, string drinkName, int drinkPrice)
@@ -99,6 +101,7 @@ namespace Tan_OOPLab3.Models
         }
     }
     // Food product class that inherits from ProductInfo
+    // Hierarchical Inheritance
     public class ProductFood : ProductInfo
     {
         public ProductFood(int id, string foodName, int foodPrice)
