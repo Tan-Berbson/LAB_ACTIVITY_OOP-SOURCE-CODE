@@ -9,6 +9,8 @@ namespace Tan_OOPLab3.Models
 {
     // Accounts Class
     // Multilevel Inheritance
+    // Authorize -> productinfo -> productdrinks/productfood
+
     public class AuthorizeAccounts
     {
         public string AdminName = "admin";
@@ -35,6 +37,9 @@ namespace Tan_OOPLab3.Models
         }
     }
     // Product info class that inherits from AuthorizeAccounts
+    // Single Inheritance
+    // AuthorizeAccounts -> ProductInfo
+
     public class ProductInfo : AuthorizeAccounts
     {
         public int Id;
@@ -93,6 +98,7 @@ namespace Tan_OOPLab3.Models
 
     // Drink product class that inherits from ProductInfo
     // Hierarchical Inheritance
+    // productinfo -> productdrinks
     public class ProductDrinks : ProductInfo
     {
         public ProductDrinks(int id, string drinkName, int drinkPrice)
@@ -102,6 +108,7 @@ namespace Tan_OOPLab3.Models
     }
     // Food product class that inherits from ProductInfo
     // Hierarchical Inheritance
+    // productinfo -> productfood
     public class ProductFood : ProductInfo
     {
         public ProductFood(int id, string foodName, int foodPrice)
