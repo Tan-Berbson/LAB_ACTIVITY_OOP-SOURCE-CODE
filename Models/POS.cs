@@ -56,9 +56,36 @@ namespace Tan_OOPLab3.Models
                 password = Password;
             }
         }
+        // Login Method
         public void Login()
         {
-            Console.WriteLine("======LOG IN =======");
+            Console.Clear();
+            Console.WriteLine("=====================");
+            Console.WriteLine("====== LOG IN =======");
+            Console.WriteLine("=====================");
+            Console.Write("Username: ");
+            string InputUsername = Console.ReadLine();
+
+            Console.Write("Password: ");
+            string InputPassword = Console.ReadLine();
+
+            Accounts acc = new Accounts(InputUsername, InputPassword);
+            if (acc.username == "admin" && acc.password == "123")
+            {
+                // Successful Login
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Log In Admin Successfully!");
+                Console.ResetColor();
+            }
+            else
+            {
+                // Invalid Try Again
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Invalid Credentials Try Again");
+                Console.ReadKey();
+                Console.ResetColor();
+                Login();
+            }
         }
     }
 }
