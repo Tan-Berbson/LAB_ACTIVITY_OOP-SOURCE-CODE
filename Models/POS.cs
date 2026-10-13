@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -76,6 +77,8 @@ namespace Tan_OOPLab3.Models
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Log In Admin Successfully!");
                 Console.ResetColor();
+                Console.ReadKey();
+                Dashboard();
             }
             else
             {
@@ -86,6 +89,19 @@ namespace Tan_OOPLab3.Models
                 Console.ResetColor();
                 Login();
             }
+        }
+        // Admin dashboard
+        public void Dashboard()
+        {
+            Console.Clear();
+            Console.WriteLine("=====================");
+            Console.WriteLine("===== DASHBOARD =====");
+            Console.WriteLine("=====================");
+            Console.WriteLine("[1] ");
+            Console.WriteLine("[2] ");
+            Console.WriteLine("[3] ");
+            Console.WriteLine("[4] ");
+
         }
     }
 }
