@@ -73,7 +73,8 @@ namespace Tan_OOPLab3.Models
             Console.Write("Username: ");
             string username = Console.ReadLine();
             Console.Write("Password: ");
-            string password = Console.ReadLine();
+            string password = ReadPassword();
+           
 
             AccountPassword acc = new AccountPassword(username, password);
 
@@ -108,6 +109,37 @@ namespace Tan_OOPLab3.Models
             Console.WriteLine("[3] SELL PRODUCTS");
             Console.WriteLine("[4] LOG OUT");
 
+        }
+        // password masking ******
+        public static string ReadPassword()
+        {
+            // deri i store ang password
+            string pass = "";
+            // mga key imo pindoton
+            ConsoleKeyInfo key;
+
+            // loop keys while typing and end if the key is enter
+            while ((key = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+            {
+                // if ang key deli mag backspace mag print ng star 
+                if (key.Key != ConsoleKey.Backspace)
+                {
+                    pass += key.KeyChar;
+                    // Print a star for every letter typed
+                    Console.Write("*"); 
+                }
+                // Handle Backspace 
+                // if imo pindoton ang backspace ma remove ang pinka last nga letra
+                else if (pass.Length > 0) 
+                {
+                    pass = pass.Substring(0, pass.Length - 1);
+                    //mao ni ang code para ma remove sad ang star
+                    Console.Write("\b \b");
+                }
+            }
+            Console.WriteLine();
+            
+            return pass;
         }
     }
 }
