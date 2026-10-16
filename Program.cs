@@ -14,8 +14,8 @@ namespace Tan_OOPLab3
         static void Main(string[] args)
         { 
             // Initialize Start System
-           POS pos = new POS();
-            pos.Login();
+           POSUI start = new POSUI();
+            start.Login();
         }
     }
 }
