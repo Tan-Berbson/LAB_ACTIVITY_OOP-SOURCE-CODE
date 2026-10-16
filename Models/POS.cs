@@ -10,22 +10,20 @@ namespace Tan_OOPLab3.Models
 {
     public class POS
     {
-        // Admin account Class
-        public class Accounts
+        //  AccountUsername Class
+        public class AccountUsername
         {
             public string username = "admin";
-            public string password = "123";
-
             // username validation
             public string Username
             {
                 get
-                { 
-                 return username;
+                {
+                    return username;
                 }
                 set
                 {
-                    if(value == "")
+                    if (value == "")
                     {
                         Console.WriteLine("USERNAME MUST NOT BE EMTY!!");
                     }
@@ -35,6 +33,12 @@ namespace Tan_OOPLab3.Models
                     }
                 }
             }
+
+        }
+        // AccountPassword Class
+        public class AccountPassword : AccountUsername
+        {
+            public string password = "123";
             // password validation
             public string Password
             {
@@ -44,33 +48,35 @@ namespace Tan_OOPLab3.Models
                 }
                 set
                 {
-                    if(value == "")
+                    if (value == "")
                     {
                         Console.WriteLine("PASSWORD MUST NOT BE EMTY!!");
                     }
                 }
             }
-            //Admin Account Constructor
-            public Accounts(string Username, string Password)
+            // Accounts constructor
+            public AccountPassword(string  Username, string Password)
             {
                 username = Username;
                 password = Password;
             }
         }
+       
         // Login Method
         public void Login()
         {
+           
             Console.Clear();
             Console.WriteLine("=====================");
             Console.WriteLine("====== LOG IN =======");
             Console.WriteLine("=====================");
             Console.Write("Username: ");
-            string InputUsername = Console.ReadLine();
-
+            string username = Console.ReadLine();
             Console.Write("Password: ");
-            string InputPassword = Console.ReadLine();
+            string password = Console.ReadLine();
 
-            Accounts acc = new Accounts(InputUsername, InputPassword);
+            AccountPassword acc = new AccountPassword(username, password);
+
             if (acc.username == "admin" && acc.password == "123")
             {
                 // Successful Login
@@ -97,10 +103,10 @@ namespace Tan_OOPLab3.Models
             Console.WriteLine("=====================");
             Console.WriteLine("===== DASHBOARD =====");
             Console.WriteLine("=====================");
-            Console.WriteLine("[1] ");
-            Console.WriteLine("[2] ");
-            Console.WriteLine("[3] ");
-            Console.WriteLine("[4] ");
+            Console.WriteLine("[1] VIEW ALL PRODUCTS ");
+            Console.WriteLine("[2] EDIT PRODUCTS ");
+            Console.WriteLine("[3] SELL PRODUCTS");
+            Console.WriteLine("[4] LOG OUT");
 
         }
     }
