@@ -16,7 +16,9 @@ namespace Tan_OOPLab3.POS
         public class Products
         {
             public string ProductName { get; set; }
-            public string ProductPrice { get; set; }
+            public int ProductPrice { get; set; }
+
+            public int ProductQuantity { get; set; }
 
         }
     }
