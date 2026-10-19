@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace Tan_OOPLab3.POS
             }
 
         }
-        public void Dashboard()
+        public void AdminDashboard()
         {
             Console.WriteLine("Dashboard");
             Console.WriteLine("[1] view products");
@@ -56,6 +57,31 @@ namespace Tan_OOPLab3.POS
                     break;
             }
         }
+        public void CashierDashboard()
+        {
+            Console.WriteLine("Cashier Dashboard");
+            Console.WriteLine("[1] sell Products");
+            Console.WriteLine("[2] Logout");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    Sell();
+                    break;
+                case 2:
+                    Login();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Choice");
+                    break;
+            }
+           
+
+        }
+        public void Sell()
+        {
+
+        }
 
         public void ViewProduct()
         {
@@ -78,7 +104,7 @@ namespace Tan_OOPLab3.POS
                     AddProduct();
                     break;
                 case 3:
-                    Dashboard();
+                    AdminDashboard();
                     break;
                 default:
                     Console.WriteLine("Invalid Choice");
