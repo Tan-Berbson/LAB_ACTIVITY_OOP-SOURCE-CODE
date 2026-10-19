@@ -10,16 +10,122 @@ namespace Tan_OOPLab3.POS
     {
         public class Accounts
         {
-            public string Username {  get; set; }
-            public string Password { get; set; }
+            public string Username;
+            public string username
+            {
+                get
+                {
+                    return Username;
+                }
+                set
+                {
+                    if (value == "")
+                    {
+                        Console.WriteLine("USERNAME MUST NOT BE EMTY!!");
+                    }
+                    else
+                    {
+                        Username = value;
+                    }
+                }
+            }
+            public string Password;
+            public string password
+            {
+                get
+                {
+                    return Password;
+                }
+                set
+                {
+                    if (value == "")
+                    {
+                        Console.WriteLine("PASSWORD MUST NOT BE EMTY!!");
+                    }
+                    else
+                    {
+                        Password = value;
+                    }
+                }
+            }
+
+
         }
+        public class AuthorizeAccount : Accounts
+        {
+            public AuthorizeAccount(string AccUsername, string AccPassword)
+            {
+                Username = AccUsername;
+                Password = AccPassword;
+            }
+        }
+
         public class Products
         {
-            public string ProductName { get; set; }
-            public int ProductPrice { get; set; }
+            public string ProductName;
 
-            public int ProductQuantity { get; set; }
+            public string productName
+            {
+                get
+                {
+                    return ProductName;
+                }
+                set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        Console.WriteLine("PRODUCT NAME MUST NOT BE EMPTY!!");
+                    }
+                    else
+                    {
+                        ProductName = value;
+                    }
+                }
+            }
 
+            public int ProductPrice;
+
+            public int productPrice
+            {
+                get
+                {
+                    return ProductPrice;
+                }
+                set
+                {
+                    if (value <= 0)
+                    {
+                        Console.WriteLine("PRODUCT PRICE MUST BE GREATER THAN ZERO!!");
+                    }
+                    else
+                    {
+                        ProductPrice = value;
+                    }
+                }
+            }
+
+            public int ProductQuantity;
+
+            public int productQuantity
+            {
+                get
+                {
+                    return ProductQuantity;
+                }
+                set
+                {
+                    if (value < 0)
+                    {
+                        Console.WriteLine("PRODUCT QUANTITY MUST NOT BE NEGATIVE!!");
+                    }
+                    else
+                    {
+                        ProductQuantity = value;
+                    }
+                }
+            }
         }
+
     }
+    
 }
