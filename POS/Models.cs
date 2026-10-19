@@ -8,8 +8,10 @@ namespace Tan_OOPLab3.POS
 {
     public class Models
     {
+        // accounts fields
         public class Accounts
         {
+            // accounts attributes
             public string Username;
             public string username
             {
@@ -29,6 +31,7 @@ namespace Tan_OOPLab3.POS
                     }
                 }
             }
+            // accounts attributes
             public string Password;
             public string password
             {
@@ -53,15 +56,17 @@ namespace Tan_OOPLab3.POS
         }
         public class AuthorizeAccount : Accounts
         {
+            // constructor
             public AuthorizeAccount(string AccUsername, string AccPassword)
             {
                 Username = AccUsername;
                 Password = AccPassword;
             }
         }
-
+        // product fields
         public class Products
         {
+            // product attribute
             public string ProductName;
 
             public string productName
@@ -84,7 +89,7 @@ namespace Tan_OOPLab3.POS
             }
 
             public int ProductPrice;
-
+            // product attributes
             public int productPrice
             {
                 get
@@ -104,26 +109,7 @@ namespace Tan_OOPLab3.POS
                 }
             }
 
-            public int ProductQuantity;
-
-            public int productQuantity
-            {
-                get
-                {
-                    return ProductQuantity;
-                }
-                set
-                {
-                    if (value < 0)
-                    {
-                        Console.WriteLine("PRODUCT QUANTITY MUST NOT BE NEGATIVE!!");
-                    }
-                    else
-                    {
-                        ProductQuantity = value;
-                    }
-                }
-            }
+          
         }
 
     }
