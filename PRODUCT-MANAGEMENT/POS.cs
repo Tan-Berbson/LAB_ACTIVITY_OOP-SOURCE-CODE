@@ -2,15 +2,18 @@ using System;
 
 namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
-    public class POS : Dashboard
+    public class POS
     {
+        private readonly Methods methods;
+
         // Creates the cashier dashboard.
-        public POS(Methods systemMethods) : base(systemMethods)
+        public POS(Methods systemMethods)
         {
+            methods = systemMethods;
         }
 
         // Displays the cashier dashboard.
-        public override void ShowDashboard()
+        public void ShowDashboard()
         {
             bool cashierLoggedIn = true;
 
@@ -23,9 +26,8 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 Console.WriteLine("  [1] Sell");
                 Console.WriteLine("  [2] Logout");
                 Console.WriteLine("----------------------------------------");
-                Console.Write("  Enter Choice: ");
 
-                int choice = methods.ReadChoice();
+                int choice = methods.ReadCursorChoice(2);
                 cashierLoggedIn = !methods.CashierDashboardChoice(choice);
             }
         }

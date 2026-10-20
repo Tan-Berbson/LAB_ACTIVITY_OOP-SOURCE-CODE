@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using static Tan_OOPLab3.PRODUCT_MANAGEMENT.Models;
 
 namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
@@ -13,7 +14,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         private Products product5;
         private Products product6;
 
-        // Creates the default products.
+       // Creates the default products.
         public Methods()
         {
             product1 = new Products { ProductName = "Chicken Joy", ProductPrice = 100 };
@@ -23,26 +24,22 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
             product5 = null;
             product6 = null;
         }
-
         // LOGIN METHODS
-
         // Starts the login process.
         public void Login()
         {
             Accounts manager = new AuthorizeAccounts("admin", "123");
             Accounts cashier = new AuthorizeAccounts("cashier", "123");
-
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("========================================");
-                Console.WriteLine("          POS SYSTEM LOGIN");
-                Console.WriteLine("========================================");
-                Console.Write("  USERNAME: ");
-                string username = Console.ReadLine();
-                Console.Write("  PASSWORD: ");
-                string password = ReadPassword();
-                Console.WriteLine("----------------------------------------");
+                Console.SetCursorPosition(0, GetLoginTop());
+                WriteCentered("========================================");
+                WriteCentered("POS SYSTEM LOGIN");
+                WriteCentered("========================================");
+                string username = ReadCenteredInput("USERNAME", false);
+                string password = ReadCenteredInput("PASSWORD", true);
+                WriteCentered("----------------------------------------");
 
                 if (username == manager.Username && password == manager.Password)
                 {
@@ -54,7 +51,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 }
                 else
                 {
-                    PrintError("  [ ERROR ] Invalid Login");
+                    PrintCenteredError("[ ERROR ] Invalid Login");
                     Console.ReadKey();
                 }
             }
@@ -63,20 +60,19 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         // Opens the correct role dashboard.
         private void OpenDashboard(string role)
         {
-            Dashboard dashboard;
+            Console.ForegroundColor = ConsoleColor.Green;
+            WriteCentered("[ INFO ] Login Successful: " + role);
+            Console.ResetColor();
+            Console.ReadKey();
 
             if (role == "Manager")
             {
-                dashboard = new ProductManagement(this);
+                new ProductManagement(this).ShowDashboard();
             }
             else
             {
-                dashboard = new POS(this);
+                new POS(this).ShowDashboard();
             }
-
-            PrintSuccess("  [ INFO ] Login Successful: " + role);
-            Console.ReadKey();
-            dashboard.ShowDashboard();
         }
 
         // DASHBOARD METHODS
@@ -105,10 +101,8 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     Console.ReadKey();
                     break;
             }
-
             return false;
         }
-
         // Handles cashier choices.
         public bool CashierDashboardChoice(int choice)
         {
@@ -124,10 +118,8 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     Console.ReadKey();
                     break;
             }
-
             return false;
         }
-
         // CRUD METHODS
 
         // C: Creates a product.
@@ -144,7 +136,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 Console.ReadKey();
                 return;
             }
-
             string productName = ReadProductName();
             Console.Write("  Product Price: ");
             int productPrice = ReadPositiveNumber("  Product Price: ");
@@ -167,7 +158,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
             Console.WriteLine("\n  Press any key to continue...");
             Console.ReadKey();
         }
-
         // U: Edits a product.
         private void UpdateProduct()
         {
@@ -188,7 +178,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 Console.ReadKey();
                 return;
             }
-
             selectedProduct.ProductName = ReadProductName();
             Console.Write("  New Product Price: ");
             selectedProduct.ProductPrice = ReadPositiveNumber("  New Product Price: ");
@@ -196,16 +185,15 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
             PrintSuccess("\n  [ INFO ] Product Updated Successfully!");
             Console.ReadKey();
         }
-
         // D: Deletes a product.
-        private void DeleteProduct()
+       private void DeleteProduct()
         {
             Console.Clear();
-            Console.WriteLine("========================================");
+            Console.WriteLine("============================================");
             Console.WriteLine("             DELETE PRODUCT");
-            Console.WriteLine("========================================");
+            Console.WriteLine("============================================");
             DisplayProducts();
-            Console.WriteLine("========================================");
+            Console.WriteLine("============================================");
             Console.Write("  Select Product: ");
 
             int select = ReadChoice();
@@ -226,7 +214,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         private void DisplayProducts()
         {
             Console.WriteLine(String.Format("  {0,-5} | {1,-18} | {2,10}", "ID", "PRODUCT NAME", "PRICE"));
-            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("------------------------------------------");
             DisplayProduct("[1]", product1);
             DisplayProduct("[2]", product2);
             DisplayProduct("[3]", product3);
@@ -383,6 +371,106 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 
         // INPUT METHODS
 
+        // Reads a menu with arrow keys.
+        public int ReadCursorChoice(int optionCount)
+        {
+            int firstOptionRow = Console.CursorTop - optionCount - 1;
+            int selected = 0;
+            ConsoleKey key;
+
+            Console.CursorVisible = false;
+
+            while (true)
+            {
+                DrawCursor(firstOptionRow, optionCount, selected);
+                key = Console.ReadKey(true).Key;
+
+                if (key == ConsoleKey.UpArrow && selected > 0)
+                {
+                    selected--;
+                }
+                else if (key == ConsoleKey.DownArrow && selected < optionCount - 1)
+                {
+                    selected++;
+                }
+                else if (key == ConsoleKey.Enter)
+                {
+                    Console.CursorVisible = true;
+                    return selected + 1;
+                }
+            }
+        }
+
+        // Draws the arrow cursor.
+        private void DrawCursor(int firstOptionRow, int optionCount, int selected)
+        {
+            int option;
+
+            for (option = 0; option < optionCount; option++)
+            {
+                Console.SetCursorPosition(0, firstOptionRow + option);
+                Console.Write(option == selected ? ">" : " ");
+            }
+        }
+
+        // Centers the login form vertically.
+        private int GetLoginTop()
+        {
+            return Math.Max(0, (Console.WindowHeight - 6) / 2);
+        }
+
+        // Writes centered text.
+        private void WriteCentered(string text)
+        {
+            int left = Math.Max(0, (Console.WindowWidth - text.Length) / 2);
+            Console.SetCursorPosition(left, Console.CursorTop);
+            Console.WriteLine(text);
+        }
+
+        // Reads input from a centered, fixed-width field.
+        private string ReadCenteredInput(string label, bool hideInput)
+        {
+            const int inputWidth = 20;
+            string field = "" + new string(' ', inputWidth) + "";
+            string row = label + ": " + field;
+            int rowTop = Console.CursorTop;
+            int rowLeft = Math.Max(0, (Console.WindowWidth - row.Length) / 2);
+            int inputLeft = rowLeft + label.Length + 3;
+            StringBuilder input = new StringBuilder();
+
+            Console.SetCursorPosition(rowLeft, rowTop);
+            Console.WriteLine(row);
+            Console.SetCursorPosition(inputLeft, rowTop);
+
+            ConsoleKeyInfo key;
+            while ((key = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+            {
+                if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+                {
+                    input.Length--;
+                    Console.SetCursorPosition(inputLeft + input.Length, rowTop);
+                    Console.Write(' ');
+                    Console.SetCursorPosition(inputLeft + input.Length, rowTop);
+                }
+                else if (!char.IsControl(key.KeyChar) && input.Length < inputWidth)
+                {
+                    input.Append(key.KeyChar);
+                    Console.Write(hideInput ? '*' : key.KeyChar);
+                }
+            }
+
+            Console.SetCursorPosition(0, rowTop + 1);
+            return input.ToString();
+        }
+
+        // Prints a centered error.
+        private void PrintCenteredError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            WriteCentered(message);
+            Console.ResetColor();
+        }
+
         // Reads a required product name.
         private string ReadProductName()
         {
@@ -444,30 +532,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
             }
 
             return payment;
-        }
-
-        // Reads a hidden password.
-        private string ReadPassword()
-        {
-            string password = "";
-            ConsoleKeyInfo key;
-
-            while ((key = Console.ReadKey(true)).Key != ConsoleKey.Enter)
-            {
-                if (key.Key != ConsoleKey.Backspace)
-                {
-                    password += key.KeyChar;
-                    Console.Write("*");
-                }
-                else if (password.Length > 0)
-                {
-                    password = password.Substring(0, password.Length - 1);
-                    Console.Write("\b \b");
-                }
-            }
-
-            Console.WriteLine();
-            return password;
         }
 
         // MESSAGE METHODS

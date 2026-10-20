@@ -2,15 +2,18 @@ using System;
 
 namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
-    internal class ProductManagement : Dashboard
+    internal class ProductManagement
     {
+        private readonly Methods methods;
+
         // Creates the manager dashboard.
-        public ProductManagement(Methods systemMethods) : base(systemMethods)
+        public ProductManagement(Methods systemMethods)
         {
+            methods = systemMethods;
         }
 
         // Displays the manager dashboard.
-        public override void ShowDashboard()
+        public void ShowDashboard()
         {
             bool managerLoggedIn = true;
 
@@ -26,9 +29,8 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 Console.WriteLine("  [4] Delete Product");
                 Console.WriteLine("  [5] Logout");
                 Console.WriteLine("----------------------------------------");
-                Console.Write("  Enter Choice: ");
 
-                int choice = methods.ReadChoice();
+                int choice = methods.ReadCursorChoice(5);
                 managerLoggedIn = !methods.ManagerDashboardChoice(choice);
             }
         }
