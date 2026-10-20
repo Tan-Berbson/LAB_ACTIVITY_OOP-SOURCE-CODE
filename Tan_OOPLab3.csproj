@@ -45,6 +45,10 @@
   <ItemGroup>
     <Compile Include="POS\Models.cs" />
     <Compile Include="POS\POSUI.cs" />
+    <Compile Include="PRODUCT-MANAGEMENT\Methods.cs" />
+    <Compile Include="PRODUCT-MANAGEMENT\Models.cs" />
+    <Compile Include="PRODUCT-MANAGEMENT\POS.cs" />
+    <Compile Include="PRODUCT-MANAGEMENT\ProductManagement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
