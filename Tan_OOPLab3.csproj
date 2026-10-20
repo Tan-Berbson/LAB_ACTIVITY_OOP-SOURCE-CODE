@@ -43,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="POS\Models.cs" />
-    <Compile Include="POS\POSUI.cs" />
     <Compile Include="PRODUCT-MANAGEMENT\Methods.cs" />
+    <Compile Include="PRODUCT-MANAGEMENT\Dashboard.cs" />
     <Compile Include="PRODUCT-MANAGEMENT\Models.cs" />
     <Compile Include="PRODUCT-MANAGEMENT\POS.cs" />
     <Compile Include="PRODUCT-MANAGEMENT\ProductManagement.cs" />

@@ -1,116 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
-    internal class Models
+    public class Models
     {
-        // accounts fields
+        // Stores account details.
         public class Accounts
         {
-            // accounts attributes
-            public string Username;
-            public string username
+            private string username;
+            private string password;
+
+            public string Username
             {
                 get
                 {
-                    return Username;
-                }
-                set
-                {
-                    if (value == "")
-                    {
-                        Console.WriteLine("USERNAME MUST NOT BE EMTY!!");
-                    }
-                    else
-                    {
-                        Username = value;
-                    }
-                }
-            }
-            // accounts attributes
-            public string Password;
-            public string password
-            {
-                get
-                {
-                    return Password;
-                }
-                set
-                {
-                    if (value == "")
-                    {
-                        Console.WriteLine("PASSWORD MUST NOT BE EMTY!!");
-                    }
-                    else
-                    {
-                        Password = value;
-                    }
-                }
-            }
-
-
-        }
-        public class AuthorizeAccount : Accounts
-        {
-            // constructor
-            public AuthorizeAccount(string AccUsername, string AccPassword)
-            {
-                Username = AccUsername;
-                Password = AccPassword;
-            }
-        }
-        // product fields
-        public class Products
-        {
-            // product attribute
-            public string ProductName;
-
-            public string productName
-            {
-                get
-                {
-                    return ProductName;
+                    return username;
                 }
                 set
                 {
                     if (string.IsNullOrWhiteSpace(value))
                     {
-                        Console.WriteLine("PRODUCT NAME MUST NOT BE EMPTY!!");
+                        Console.WriteLine("  [ ERROR ] Username cannot be empty.");
                     }
                     else
                     {
-                        ProductName = value;
+                        username = value;
                     }
                 }
             }
 
-            public int ProductPrice;
-            // product attributes
-            public int productPrice
+            public string Password
             {
                 get
                 {
-                    return ProductPrice;
+                    return password;
+                }
+                set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        Console.WriteLine("  [ ERROR ] Password cannot be empty.");
+                    }
+                    else
+                    {
+                        password = value;
+                    }
+                }
+            }
+        }
+
+        public class AuthorizeAccounts : Accounts
+        {
+            public AuthorizeAccounts(string username, string password)
+            {
+                Username = username;
+                Password = password;
+            }
+        }
+        // Stores product details.
+        public class Products
+        {
+            private string productName;
+            private int productPrice;
+
+            public string ProductName
+            {
+                get
+                {
+                    return productName;
+                }
+                set
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        Console.WriteLine("  [ ERROR ] Product name cannot be empty.");
+                    }
+                    else
+                    {
+                        productName = value;
+                    }
+                }
+            }
+
+            public int ProductPrice
+            {
+                get
+                {
+                    return productPrice;
                 }
                 set
                 {
                     if (value <= 0)
                     {
-                        Console.WriteLine("PRODUCT PRICE MUST BE GREATER THAN ZERO!!");
+                        Console.WriteLine("  [ ERROR ] Product price must be greater than zero.");
                     }
                     else
                     {
-                        ProductPrice = value;
+                        productPrice = value;
                     }
                 }
             }
-            
-
-
         }
     }
 }

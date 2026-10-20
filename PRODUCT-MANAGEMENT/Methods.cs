@@ -1,237 +1,491 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tan_OOPLab3.PRODUCT_MANAGEMENT;
-using static Tan_OOPLab3.POS.Models;
+using System;
+using static Tan_OOPLab3.PRODUCT_MANAGEMENT.Models;
 
 namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
     public class Methods
     {
-        // objects of Products class
+        // Fixed product objects.
         private Products product1;
         private Products product2;
         private Products product3;
         private Products product4;
-        private Products AddProduct1;
-        private Products AddProduct2;
+        private Products product5;
+        private Products product6;
 
-        // static data members of Products class
+        // Creates the default products.
         public Methods()
         {
-            product1 = new Products{ ProductName = "Chicken Joy", ProductPrice = 100 };
-            product2 = new Products{ ProductName = "Burger Steak", ProductPrice = 150 };
-            product3 = new Products{ ProductName = "Jolly Spaghetti", ProductPrice = 120 };
-            product4 = new Products{ ProductName = "Palabok Fiesta", ProductPrice = 130 };
-
-            AddProduct1 = null;
-            AddProduct2 = null;
-
+            product1 = new Products { ProductName = "Chicken Joy", ProductPrice = 100 };
+            product2 = new Products { ProductName = "Burger Steak", ProductPrice = 150 };
+            product3 = new Products { ProductName = "Jolly Spaghetti", ProductPrice = 120 };
+            product4 = new Products { ProductName = "Palabok Fiesta", ProductPrice = 130 };
+            product5 = null;
+            product6 = null;
         }
-        // Create Products
-        public void Create()
+
+        // LOGIN METHODS
+
+        // Starts the login process.
+        public void Login()
+        {
+            Accounts manager = new AuthorizeAccounts("admin", "123");
+            Accounts cashier = new AuthorizeAccounts("cashier", "123");
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("========================================");
+                Console.WriteLine("          POS SYSTEM LOGIN");
+                Console.WriteLine("========================================");
+                Console.Write("  USERNAME: ");
+                string username = Console.ReadLine();
+                Console.Write("  PASSWORD: ");
+                string password = ReadPassword();
+                Console.WriteLine("----------------------------------------");
+
+                if (username == manager.Username && password == manager.Password)
+                {
+                    OpenDashboard("Manager");
+                }
+                else if (username == cashier.Username && password == cashier.Password)
+                {
+                    OpenDashboard("Cashier");
+                }
+                else
+                {
+                    PrintError("  [ ERROR ] Invalid Login");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        // Opens the correct role dashboard.
+        private void OpenDashboard(string role)
+        {
+            Dashboard dashboard;
+
+            if (role == "Manager")
+            {
+                dashboard = new ProductManagement(this);
+            }
+            else
+            {
+                dashboard = new POS(this);
+            }
+
+            PrintSuccess("  [ INFO ] Login Successful: " + role);
+            Console.ReadKey();
+            dashboard.ShowDashboard();
+        }
+
+        // DASHBOARD METHODS
+
+        // Handles manager choices.
+        public bool ManagerDashboardChoice(int choice)
+        {
+            switch (choice)
+            {
+                case 1:
+                    CreateProduct();
+                    break;
+                case 2:
+                    ReadProducts();
+                    break;
+                case 3:
+                    UpdateProduct();
+                    break;
+                case 4:
+                    DeleteProduct();
+                    break;
+                case 5:
+                    return true;
+                default:
+                    PrintError("\n  [ ERROR ] Invalid Choice");
+                    Console.ReadKey();
+                    break;
+            }
+
+            return false;
+        }
+
+        // Handles cashier choices.
+        public bool CashierDashboardChoice(int choice)
+        {
+            switch (choice)
+            {
+                case 1:
+                    SellProduct();
+                    break;
+                case 2:
+                    return true;
+                default:
+                    PrintError("\n  [ ERROR ] Invalid Choice");
+                    Console.ReadKey();
+                    break;
+            }
+
+            return false;
+        }
+
+        // CRUD METHODS
+
+        // C: Creates a product.
+        private void CreateProduct()
         {
             Console.Clear();
-            Products products1 = new Products();
-            products1.ProductName = "Chicken joy";
-            products1.ProductPrice = 199;
-            Products products2 = new Products();
-            products2.ProductName = "Hamburger";
-            products2.ProductPrice = 100;
-            Products products3 = new Products();
-            products3.ProductName = "Hotdogs";
-            products3.ProductPrice = 100;
-            Products products4 = new Products();
-            products4.ProductName = "Footlong";
-            products4.ProductPrice = 100;
-
             Console.WriteLine("========================================");
-            Console.WriteLine("               EDIT PRODUCT");
-            Console.WriteLine("========================================");
-            // Added the [1], [2] IDs to the display table
-            Console.WriteLine(String.Format("  {0,-5} | {1,-15} | {2,10}", "ID", "PRODUCT NAME", "PRICE"));
-            Console.WriteLine("----------------------------------------");
-            Console.WriteLine(String.Format("  {0,-5} | {1,-15} | Php {2,6}", "[1]", products1.ProductName, products1.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-5} | {1,-15} | Php {2,6}", "[2]", products2.ProductName, products2.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-5} | {1,-15} | Php {2,6}", "[3]", products3.ProductName, products3.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-5} | {1,-15} | Php {2,6}", "[4]", products4.ProductName, products4.ProductPrice));
+            Console.WriteLine("             CREATE PRODUCT");
             Console.WriteLine("========================================");
 
-            Console.Write("  Select which product to edit: ");
+            if (IsProductFull())
+            {
+                PrintError("  [ ERROR ] Product slots are full.");
+                Console.ReadKey();
+                return;
+            }
 
-            // Validate the Choice input using TryParse
-            int select = 
-            
-            Console.WriteLine("----------------------------------------");
+            string productName = ReadProductName();
+            Console.Write("  Product Price: ");
+            int productPrice = ReadPositiveNumber("  Product Price: ");
+            Products newProduct = new Products { ProductName = productName, ProductPrice = productPrice };
+            SaveProduct(newProduct);
 
-            string newName;
-           
-            int newPrice;
+            PrintSuccess("\n  [ INFO ] Product Created Successfully!");
+            Console.ReadKey();
+        }
 
+        // R: Views all products.
+        private void ReadProducts()
+        {
+            Console.Clear();
+            Console.WriteLine("========================================");
+            Console.WriteLine("              VIEW PRODUCTS");
+            Console.WriteLine("========================================");
+            DisplayProducts();
+            Console.WriteLine("========================================");
+            Console.WriteLine("\n  Press any key to continue...");
+            Console.ReadKey();
+        }
+
+        // U: Edits a product.
+        private void UpdateProduct()
+        {
+            Console.Clear();
+            Console.WriteLine("========================================");
+            Console.WriteLine("              EDIT PRODUCT");
+            Console.WriteLine("========================================");
+            DisplayProducts();
+            Console.WriteLine("========================================");
+            Console.Write("  Select Product: ");
+
+            int select = ReadChoice();
+            Products selectedProduct = GetProduct(select);
+
+            if (selectedProduct == null)
+            {
+                PrintError("  [ ERROR ] Invalid product selection.");
+                Console.ReadKey();
+                return;
+            }
+
+            selectedProduct.ProductName = ReadProductName();
+            Console.Write("  New Product Price: ");
+            selectedProduct.ProductPrice = ReadPositiveNumber("  New Product Price: ");
+
+            PrintSuccess("\n  [ INFO ] Product Updated Successfully!");
+            Console.ReadKey();
+        }
+
+        // D: Deletes a product.
+        private void DeleteProduct()
+        {
+            Console.Clear();
+            Console.WriteLine("========================================");
+            Console.WriteLine("             DELETE PRODUCT");
+            Console.WriteLine("========================================");
+            DisplayProducts();
+            Console.WriteLine("========================================");
+            Console.Write("  Select Product: ");
+
+            int select = ReadChoice();
+
+            if (GetProduct(select) == null)
+            {
+                PrintError("  [ ERROR ] Invalid product selection.");
+                Console.ReadKey();
+                return;
+            }
+
+            RemoveProduct(select);
+            PrintSuccess("\n  [ INFO ] Product Deleted Successfully!");
+            Console.ReadKey();
+        }
+
+        // Prints all product slots.
+        private void DisplayProducts()
+        {
+            Console.WriteLine(String.Format("  {0,-5} | {1,-18} | {2,10}", "ID", "PRODUCT NAME", "PRICE"));
+            Console.WriteLine("---------------------------------------------");
+            DisplayProduct("[1]", product1);
+            DisplayProduct("[2]", product2);
+            DisplayProduct("[3]", product3);
+            DisplayProduct("[4]", product4);
+            DisplayProduct("[5]", product5);
+            DisplayProduct("[6]", product6);
+        }
+
+        // Prints one existing product.
+        private void DisplayProduct(string id, Products product)
+        {
+            if (product != null)
+            {
+                Console.WriteLine(String.Format("  {0,-5} | {1,-18} | Php {2,6}", id, product.ProductName, product.ProductPrice));
+            }
+        }
+
+        // Saves a product in an empty slot.
+        private void SaveProduct(Products product)
+        {
+            if (product1 == null)
+            {
+                product1 = product;
+            }
+            else if (product2 == null)
+            {
+                product2 = product;
+            }
+            else if (product3 == null)
+            {
+                product3 = product;
+            }
+            else if (product4 == null)
+            {
+                product4 = product;
+            }
+            else if (product5 == null)
+            {
+                product5 = product;
+            }
+            else
+            {
+                product6 = product;
+            }
+        }
+
+        // Checks for an empty slot.
+        private bool IsProductFull()
+        {
+            return product1 != null && product2 != null && product3 != null && product4 != null && product5 != null && product6 != null;
+        }
+
+        // Gets a product by ID.
+        private Products GetProduct(int select)
+        {
             switch (select)
             {
                 case 1:
-                    // Validate String
-                    Console.Write("  New Product Name: ");
-                    newName = Console.ReadLine();
-                    newName = ReadProductName();
-                    products1.ProductName = newName;
-
-                    Console.Write("  New Product Quantity: ");
-                    
-
-
-
-                    Console.WriteLine("\n  [ INFO ] Product Updated Successfully!");
-                    Console.ReadKey();
-                   
-                    break;
-
+                    return product1;
                 case 2:
-                    Console.Write("  New Product Name: ");
-                    newName = Console.ReadLine();
-                    newName = ReadProductName();
-                    products2.ProductName = newName;
-
-
-                    Console.Write("  New Product Price: ");
-                    while (!int.TryParse(Console.ReadLine(), out newPrice))
-                    {
-                        Console.WriteLine("  [ ERROR ] Invalid price. Must be a number.");
-                        Console.Write("  New Product Price: ");
-                    }
-                    products2.ProductPrice = newPrice;
-
-                    Console.WriteLine("\n  [ INFO ] Product Updated Successfully!");
-                    Console.ReadKey();
-                   
-                    break;
-
+                    return product2;
                 case 3:
-                    Console.Write("  New Product Name: ");
-                    newName = Console.ReadLine();
-                    while (string.IsNullOrWhiteSpace(newName))
-                    {
-                        Console.WriteLine("  [ ERROR ] Name cannot be empty.");
-                        Console.Write("  New Product Name: ");
-                        newName = Console.ReadLine();
-                    }
-                    products3.ProductName = newName;
-
-
-                    Console.Write("  New Product Price: ");
-                    while (!int.TryParse(Console.ReadLine(), out newPrice))
-                    {
-                        Console.WriteLine("  [ ERROR ] Invalid price. Must be a number.");
-                        Console.Write("  New Product Price: ");
-                    }
-                    products3.ProductPrice = newPrice;
-
-                    Console.WriteLine("\n  [ INFO ] Product Updated Successfully!");
-                    Console.ReadKey();
-                 
-                    break;
-
+                    return product3;
                 case 4:
-                    Console.Write("  New Product Name: ");
-                    newName = Console.ReadLine();
-                    newName = ReadProductName();
-                    products4.ProductName = newName;
-
-
-
-                    Console.Write("  New Product Price: ");
-                    int newPrice4 = ReadProductPrice();
-                    products4.ProductPrice = newPrice4;
-
-                    Console.WriteLine("\n  [ INFO ] Product Updated Successfully!");
-                    Console.ReadKey();
-                   
-                    break;
-
+                    return product4;
+                case 5:
+                    return product5;
+                case 6:
+                    return product6;
                 default:
-                    Console.WriteLine("\n  [ ERROR ] Invalid Select");
-                    Console.ReadKey();
-                   
+                    return null;
+            }
+        }
+
+        // Removes a product by ID.
+        private void RemoveProduct(int select)
+        {
+            switch (select)
+            {
+                case 1:
+                    product1 = null;
+                    break;
+                case 2:
+                    product2 = null;
+                    break;
+                case 3:
+                    product3 = null;
+                    break;
+                case 4:
+                    product4 = null;
+                    break;
+                case 5:
+                    product5 = null;
+                    break;
+                case 6:
+                    product6 = null;
                     break;
             }
         }
-        // Update Products
-        public void Update()
-        {
 
-        }
-        // Read Products
-        public void Read()
+        // CASHIER METHODS
+
+        // Completes one cashier sale.
+        private void SellProduct()
         {
             Console.Clear();
-            Products products1 = new Products();
-            products1.ProductName = "Chicken joy";
-            products1.ProductPrice = 199;
-            Products products2 = new Products();
-            products2.ProductName = "Hamburger";
-            products2.ProductPrice = 100;
-            Products products3 = new Products();
-            products3.ProductName = "Hotdogs";
-            products3.ProductPrice = 100;
-            Products products4 = new Products();
-            products4.ProductName = "Footlong";
-            products4.ProductPrice = 100;
+            Console.WriteLine("========================================");
+            Console.WriteLine("                 SELL");
+            Console.WriteLine("========================================");
+            DisplayProducts();
+            Console.WriteLine("========================================");
+            Console.Write("  Select Product: ");
 
-            Console.WriteLine("========================================");
-            Console.WriteLine("               PRODUCT LIST");
-            Console.WriteLine("========================================");
-            Console.WriteLine(String.Format("  {0,-15} | {1,10}", "PRODUCT NAME", "PRICE"));
-            Console.WriteLine("----------------------------------------");
+            int select = ReadChoice();
+            Products selectedProduct = GetProduct(select);
 
-            Console.WriteLine(String.Format("  {0,-15} | Php {1,6}", products1.ProductName, products1.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-15} | Php {1,6}", products2.ProductName, products2.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-15} | Php {1,6}", products3.ProductName, products3.ProductPrice));
-            Console.WriteLine(String.Format("  {0,-15} | Php {1,6}", products4.ProductName, products4.ProductPrice));
-            Console.WriteLine("========================================");
+            if (selectedProduct == null)
+            {
+                PrintError("  [ ERROR ] Invalid product selection.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("  Enter Quantity: ");
+            int quantity = ReadPositiveNumber("  Enter Quantity: ");
+            int total = selectedProduct.ProductPrice * quantity;
+
+            Console.WriteLine(String.Format("  Total Amount: Php {0}", total));
+            Console.Write("  Enter Payment: ");
+            int payment = ReadPayment(total);
+            PrintReceipt(selectedProduct, quantity, total, payment);
 
             Console.WriteLine("\n  Press any key to continue...");
             Console.ReadKey();
-            
         }
-        // Delete Products
-        public void Delete()
-        {
-        }
-        public string ReadProductName()
-        {
-            Console.Write("  New Product Name: ");
-            string newName = Console.ReadLine();
 
-            while (string.IsNullOrWhiteSpace(newName))
+        // Prints the sale receipt.
+        private void PrintReceipt(Products product, int quantity, int total, int payment)
+        {
+            Console.Clear();
+            Console.WriteLine("========================================");
+            Console.WriteLine("                 RECEIPT");
+            Console.WriteLine("========================================");
+            Console.WriteLine(String.Format("  Product : {0}", product.ProductName));
+            Console.WriteLine(String.Format("  Price   : Php {0}", product.ProductPrice));
+            Console.WriteLine(String.Format("  Quantity: {0}", quantity));
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine(String.Format("  Total   : Php {0}", total));
+            Console.WriteLine(String.Format("  Payment : Php {0}", payment));
+            Console.WriteLine(String.Format("  Change  : Php {0}", payment - total));
+            Console.WriteLine("========================================");
+            Console.WriteLine("  Thank you for your purchase!");
+        }
+
+        // INPUT METHODS
+
+        // Reads a required product name.
+        private string ReadProductName()
+        {
+            Console.Write("  Product Name: ");
+            string productName = Console.ReadLine();
+
+            while (string.IsNullOrWhiteSpace(productName))
             {
-                Console.WriteLine("  [ ERROR ] Name cannot be empty.");
-                Console.Write("  New Product Name: ");
-                newName = Console.ReadLine();
+                PrintError("  [ ERROR ] Product name cannot be empty.");
+                Console.Write("  Product Name: ");
+                productName = Console.ReadLine();
             }
 
-            return newName;
+            return productName;
         }
-        public int ReadProductPrice()
+
+        // Reads a number input.
+        private int ReadNumber(string prompt)
         {
-            int newPrice;
-
-            Console.Write("  New Product Price: ");
-
-            while (!int.TryParse(Console.ReadLine(), out newPrice))
+            int number;
+            while (!int.TryParse(Console.ReadLine(), out number))
             {
-                Console.WriteLine(
-                    "  [ ERROR ] Invalid price. Must be a number.");
-
-                Console.Write("  New Product Price: ");
+                PrintError("  [ ERROR ] Please enter a valid number.");
+                Console.Write(prompt);
             }
 
-            return newPrice;
+            return number;
         }
 
+        // Reads a menu choice.
+        public int ReadChoice()
+        {
+            return ReadNumber("  Enter Choice: ");
+        }
 
+        // Reads a positive number.
+        private int ReadPositiveNumber(string prompt)
+        {
+            int number = ReadNumber(prompt);
+            while (number <= 0)
+            {
+                PrintError("  [ ERROR ] Value must be greater than zero.");
+                Console.Write(prompt);
+                number = ReadNumber(prompt);
+            }
 
+            return number;
+        }
+
+        // Reads enough payment.
+        private int ReadPayment(int total)
+        {
+            int payment = ReadPositiveNumber("  Enter Payment: ");
+            while (payment < total)
+            {
+                PrintError("  [ ERROR ] Payment is not enough.");
+                Console.Write("  Enter Payment: ");
+                payment = ReadPositiveNumber("  Enter Payment: ");
+            }
+
+            return payment;
+        }
+
+        // Reads a hidden password.
+        private string ReadPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo key;
+
+            while ((key = Console.ReadKey(true)).Key != ConsoleKey.Enter)
+            {
+                if (key.Key != ConsoleKey.Backspace)
+                {
+                    password += key.KeyChar;
+                    Console.Write("*");
+                }
+                else if (password.Length > 0)
+                {
+                    password = password.Substring(0, password.Length - 1);
+                    Console.Write("\b \b");
+                }
+            }
+
+            Console.WriteLine();
+            return password;
+        }
+
+        // MESSAGE METHODS
+
+        // Prints a success message.
+        public void PrintSuccess(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        // Prints an error message.
+        public void PrintError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
     }
 }
