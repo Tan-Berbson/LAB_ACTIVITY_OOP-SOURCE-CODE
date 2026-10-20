@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using Tan_OOPLab3.POS;
+using Tan_OOPLab3.PRODUCT_MANAGEMENT;
 
 
 namespace Tan_OOPLab3
@@ -14,7 +9,8 @@ namespace Tan_OOPLab3
       
         static void Main(string[] args)
         {
-            POSUI start = new POSUI();
+            // start the program by calling the Login method from the Methods class
+            Methods start = new Methods();
             start.Login();
         }
     }
