@@ -16,6 +16,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 {
                     return username;
                 }
+                //validation
                 set
                 {
                     if (string.IsNullOrWhiteSpace(value))
@@ -29,12 +30,14 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 }
             }
 
+
             public string Password
             {
                 get
                 {
                     return password;
                 }
+                //validation
                 set
                 {
                     if (string.IsNullOrWhiteSpace(value))
@@ -48,7 +51,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 }
             }
         }
-
+        // AuthorizeAccounts Constructor
         public class AuthorizeAccounts : Accounts
         {
             public AuthorizeAccounts(string username, string password)
