@@ -14,7 +14,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         private Products product5;
         private Products product6;
 
-       // Creates the default products.
+       // Creates the default products.    
         public Methods()
         {
             product1 = new Products { ProductName = "Chicken Joy", ProductPrice = 100 };
