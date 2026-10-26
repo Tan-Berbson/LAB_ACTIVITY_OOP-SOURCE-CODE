@@ -9,7 +9,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         {
             private string username;
             private string password;
-
             public string Username
             {
                 get
@@ -29,8 +28,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     }
                 }
             }
-
-
             public string Password
             {
                 get
@@ -84,7 +81,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     }
                 }
             }
-
             public int ProductPrice
             {
                 get
