@@ -7,8 +7,11 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         // Stores account details.
         public class Accounts
         {
+           //
             private string username;
             private string password;
+
+            //
             public string Username
             {
                 get

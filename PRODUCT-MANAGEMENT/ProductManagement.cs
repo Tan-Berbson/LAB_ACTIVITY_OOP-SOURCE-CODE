@@ -4,6 +4,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
     internal class ProductManagement
     {
+        //
         private readonly Methods methods;
 
         // Creates the manager dashboard.
@@ -27,10 +28,11 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                 Console.WriteLine("  [2] View Products");
                 Console.WriteLine("  [3] Edit Product");
                 Console.WriteLine("  [4] Delete Product");
-                Console.WriteLine("  [5] Logout");
+                Console.WriteLine("  [5] Sell Product");
+                Console.WriteLine("  [6] Logout");
                 Console.WriteLine("----------------------------------------");
 
-                int choice = methods.ReadCursorChoice(5);
+                int choice = methods.ReadCursorChoice(6);
                 managerLoggedIn = !methods.ManagerDashboardChoice(choice);
             }
         }

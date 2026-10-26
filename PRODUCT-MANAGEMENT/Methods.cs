@@ -95,6 +95,9 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     DeleteProduct();
                     break;
                 case 5:
+                    SellProduct();
+                    break;
+                case 6:
                     return true;
                 default:
                     PrintError("\n  [ ERROR ] Invalid Choice");
