@@ -4,7 +4,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
     internal class ProductManagement
     {
-        //
+        //Fields
         private readonly Methods methods;
 
         // Creates the manager dashboard.

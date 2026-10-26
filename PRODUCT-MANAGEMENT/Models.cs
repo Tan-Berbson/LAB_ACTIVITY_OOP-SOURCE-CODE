@@ -7,11 +7,11 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         // Stores account details.
         public class Accounts
         {
-           //
+           //fields
             private string username;
             private string password;
 
-            //
+            // Property for accessing and validating the user's username.
             public string Username
             {
                 get
@@ -31,6 +31,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     }
                 }
             }
+            // Property for accessing and validating the user's password.
             public string Password
             {
                 get
@@ -65,7 +66,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         {
             private string productName;
             private int productPrice;
-
+            // Property for accessing and validating the Product name.
             public string ProductName
             {
                 get
@@ -84,6 +85,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
                     }
                 }
             }
+            // Property for accessing and validating the Product price.
             public int ProductPrice
             {
                 get

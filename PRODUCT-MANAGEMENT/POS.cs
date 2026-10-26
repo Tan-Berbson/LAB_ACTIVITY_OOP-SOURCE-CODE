@@ -12,9 +12,6 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         {
             methods = systemMethods;
         }
-
-
-
         // Displays the cashier dashboard.
         public void ShowDashboard()
         {
