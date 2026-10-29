@@ -4,7 +4,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
 {
     public class POS
     {
-
+        // fields
         private readonly Methods methods;
 
         // Creates the cashier dashboard.
