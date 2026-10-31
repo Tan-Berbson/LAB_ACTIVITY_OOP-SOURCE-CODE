@@ -8,6 +8,7 @@ namespace Tan_OOPLab3.PRODUCT_MANAGEMENT
         private readonly Methods methods;
 
         // Creates the cashier dashboard.
+
         public POS(Methods systemMethods)
         {
             methods = systemMethods;
